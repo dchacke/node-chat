@@ -8,10 +8,12 @@ var s = net.Server(function(socket){
   sockets.push(socket);
 
   // Show number of participants
-  socket.write("Hi!\n" + sockets.length + " participants connected.\n");
+  socket.write("Hi!\n" + sockets.length + " participants are connected.\n");
 
   // Tell others someone joined
   for(var i = 0; i < sockets.length; i++){
+    console.log("Join, " + sockets.length);
+
     // Don't tell the one who just joined
     if(sockets[i] == socket) continue;
 
@@ -27,6 +29,7 @@ var s = net.Server(function(socket){
 
       // Send message
       sockets[i].write(d);
+      console.log("Message sent");
     }
   });
 
@@ -38,6 +41,7 @@ var s = net.Server(function(socket){
     for(var i = 0; i < sockets.length; i++){
       // Let others know someone just left
       sockets[i].write("Someone just left.\n");
+      console.log("Leave, " + sockets.length);
     }
   });
 });
